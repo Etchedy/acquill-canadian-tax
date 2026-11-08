@@ -1,0 +1,17 @@
+{
+  "completed_at": "2026-10-26T19:00:19.561343+00:00",
+  "saved_this_run": 25,
+  "visited": 25,
+  "queued_remaining": 57,
+  "coverage": {
+    "documents": 147,
+    "oldest_retrieval": "2026-10-26T18:50:42.636982+00:00",
+    "latest_retrieval": "2026-10-26T19:00:18.555594+00:00",
+    "scope": "Selected English CRA HTML publications; not the entire CRA website",
+    "historical_versions": false
+  },
+  "failures": [],
+  "seeds": [
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4002/t4002-1.html"
+  ]
+}

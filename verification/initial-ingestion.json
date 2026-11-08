@@ -1,0 +1,29 @@
+{
+  "completed_at": "2026-10-26T19:00:21.510539+00:00",
+  "saved_this_run": 135,
+  "visited": 137,
+  "queued_remaining": 0,
+  "coverage": {
+    "documents": 148,
+    "oldest_retrieval": "2026-10-26T18:50:42.636982+00:00",
+    "latest_retrieval": "2026-10-26T19:00:20.506087+00:00",
+    "scope": "Selected English CRA HTML publications; not the entire CRA website",
+    "historical_versions": false
+  },
+  "failures": [
+    {
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4002/business-professional-income.html",
+      "reason": "Upstream returned HTTP 404"
+    },
+    {
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-3-property-investments-savings-plans/series-3-property-investments-savings-plan-folio-10-registered-plans-individuals/income-tax-folio-s3-f10-c3-advantages-rrsps-rrifs-tfsas/chapter-history-s3-f10-c3-advantages-rrsps-resps-rrifs-rdsps-tfsas.html",
+      "reason": "Upstream request failed or timed out"
+    }
+  ],
+  "seeds": [
+    "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index.html",
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4022/general-information-gst-hst-registrants.html",
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4002/business-professional-income.html",
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4036/rental-income.html"
+  ]
+}

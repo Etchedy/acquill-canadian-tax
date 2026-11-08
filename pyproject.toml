@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "acquill-canadian-tax-mcp"
+version = "0.1.0"
+description = "Canadian Tax MCP by Acquill: CRA guidance, legislation and court decisions"
+requires-python = ">=3.11"
+dependencies = ["mcp==1.30.0", "httpx[socks]==0.28.1", "beautifulsoup4==4.15.0", "uvicorn==0.54.0"]
+[project.optional-dependencies]
+test = ["pytest==9.1.1", "pytest-asyncio==1.4.1"]
+[project.scripts]
+canadian-tax-mcp = "canadian_tax_mcp.server:main"
+canadian-tax-index = "canadian_tax_mcp.ingest:main"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

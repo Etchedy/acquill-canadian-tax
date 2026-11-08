@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "schemas": [
+    "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
+  ],
+  "scope": "Portable package schema checks with fixture URLs; OpenAI extension and directory eligibility require platform validation. No fixture package is included in release."
+}

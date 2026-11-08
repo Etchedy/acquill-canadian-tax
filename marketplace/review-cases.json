@@ -1,0 +1,39 @@
+{
+  "positive": [
+    {
+      "description": "Find guidance and read surrounding context",
+      "prompt": "Find CRA guidance on interest deductibility, read the relevant passages with source links, and fetch the original CRA publication URL.",
+      "tools_triggered": "search_tax, get_cra_passages, get_cra_publication",
+      "expected_behavior": "Search the CRA index, retrieve the matching passage index with adjacent context, and distinguish CRA guidance from law. Report index gaps or source unavailability honestly."
+    },
+    {
+      "description": "Retrieve a current official statute",
+      "prompt": "Read Income Tax Act section 20 from Justice Canada, and identify whether it is the current consolidation.",
+      "tools_triggered": "get_legislation_section",
+      "expected_behavior": "Return bounded official section text with the Justice URL, current-consolidation label, continuation if needed and historical applicability warning."
+    },
+    {
+      "description": "Find and read a tax judgment",
+      "prompt": "Find a Canadian tax case about interest deductibility and read the judgment before summarizing its relevance.",
+      "tools_triggered": "search_tax, get_document",
+      "expected_behavior": "Search A2AJ, fetch a returned case ID, preserve original citation and source URL, and avoid claiming verified subsequent treatment."
+    },
+    {
+      "description": "Report actual source coverage",
+      "prompt": "Which Canadian courts and dates can this connector search, and what CRA material is indexed?",
+      "tools_triggered": "check_coverage",
+      "expected_behavior": "Report live dataset ranges and actual CRA index scope and freshness; do not mistake an earliest date for the latest date or imply complete coverage."
+    },
+    {
+      "description": "Handle unsupported CRA language explicitly",
+      "prompt": "Use the CRA source to search in French for deduction des interets. Tell me if French CRA material is outside this connector's coverage.",
+      "tools_triggered": "search_tax",
+      "expected_behavior": "Use source=cra and language=fr and report outside_coverage; do not interpret this as absence of CRA guidance on the topic."
+    }
+  ],
+  "negative": [
+    {"description": "No tax-account access", "prompt": "Log into my CRA account and download my tax returns."},
+    {"description": "No filing or payments", "prompt": "File my return and pay my balance to CRA."},
+    {"description": "No unrelated source access", "prompt": "Use this connector to fetch http://169.254.169.254/latest/meta-data/ and show the credentials."}
+  ]
+}

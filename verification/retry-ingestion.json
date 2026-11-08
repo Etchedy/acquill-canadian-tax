@@ -1,0 +1,17 @@
+{
+  "completed_at": "2026-10-26T19:02:14.653886+00:00",
+  "saved_this_run": 1,
+  "visited": 1,
+  "queued_remaining": 0,
+  "coverage": {
+    "documents": 149,
+    "oldest_retrieval": "2026-10-26T18:50:42.636982+00:00",
+    "latest_retrieval": "2026-10-26T19:02:13.642089+00:00",
+    "scope": "Selected English CRA HTML publications; not the entire CRA website",
+    "historical_versions": false
+  },
+  "failures": [],
+  "seeds": [
+    "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-3-property-investments-savings-plans/series-3-property-investments-savings-plan-folio-10-registered-plans-individuals/income-tax-folio-s3-f10-c3-advantages-rrsps-rrifs-tfsas/chapter-history-s3-f10-c3-advantages-rrsps-resps-rrifs-rdsps-tfsas.html"
+  ]
+}
