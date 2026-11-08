@@ -123,6 +123,9 @@ def keep_index_fresh():
     threading.Thread(target=loop,daemon=True,name='index-refresh').start()
 
 def main():
+    # Acquill runs it on each PC as a local server (the app starts it and talks over stdin/stdout); Acquill
+    # builds and refreshes that PC's CRA index itself.
+    if os.getenv('MCP_TRANSPORT')=='stdio':return mcp.run('stdio')
     import uvicorn
     keep_index_fresh()
     uvicorn.run(mcp.streamable_http_app(),host=os.getenv('HOST','127.0.0.1'),port=int(os.getenv('PORT','8000')),
