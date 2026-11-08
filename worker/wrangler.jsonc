@@ -1,0 +1,26 @@
+// Acquill Canadian Tax on Cloudflare Workers (free plan). See ../DEPLOY-CLOUDFLARE.md.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "acquill-tax",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "d1_databases": [
+    // database_id is filled in by `wrangler d1 create acquill-tax-cra` (DEPLOY-CLOUDFLARE.md, step 2).
+    { "binding": "DB", "database_name": "acquill-tax-cra", "database_id": "00000000-0000-0000-0000-000000000000" }
+  ],
+  "vars": {
+    "PUBLIC_URL": "https://tax.acquill.com",
+    "SUPPORT_EMAIL": "support@acquill.com"
+  },
+  // tax.acquill.com, once the acquill.com zone is in the same Cloudflare account (DEPLOY-CLOUDFLARE.md, step 5).
+  // "routes": [{ "pattern": "tax.acquill.com", "custom_domain": true }],
+  "env": {
+    // `wrangler dev --env local`: a local server and database for testing, with no Cloudflare account.
+    "local": {
+      "d1_databases": [{ "binding": "DB", "database_name": "acquill-tax-cra-local", "database_id": "local" }],
+      "vars": { "PUBLIC_URL": "", "SUPPORT_EMAIL": "support@acquill.com", "ALLOW_LOCAL_ORIGINS": "1" }
+    }
+  }
+}

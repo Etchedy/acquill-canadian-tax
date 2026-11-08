@@ -21,14 +21,14 @@ characters; the same name is used on both. Requirements were re-checked against 
 | Logo: Acquill icon, square 512 px PNG and SVG | both | `assets/icon.png`, `assets/icon.svg` |
 | Five positive and three negative review cases | OpenAI | `marketplace/review-cases.json` |
 | Package: `plugin.json` + `mcp.json` ZIP and a Claude worksheet | OpenAI / Claude | `scripts/package_marketplaces.py` |
-| Hosting config and a self-building, self-refreshing CRA index | both | `fly.toml`, `Dockerfile.fly`, `DEPLOY-FLY.md` |
+| Hosting: Cloudflare Worker (free plan) with the CRA index in D1, refreshed monthly by GitHub Actions; same output as the Python server on 9 live pages | both | `worker/`, `DEPLOY-CLOUDFLARE.md`, `.github/workflows/refresh-cra-index.yml` |
 | Tests: 36 unit/contract tests; live check of all six tools against CRA, Justice Canada and A2AJ | both | `tests/`, `scripts/smoke.py` (PASS 2026-11-08, local) |
 
 ## Still needed, in order
 
-1. **Deploy** to `https://tax.acquill.com` (see `DEPLOY-FLY.md`). Needs the Fly account behind acquill.com and a
-   go-ahead on the small hosting cost.
-2. **Public contact and operator: set.** Operator "Acquill", contact support@acquill.com (in `fly.toml` and the
+1. **Deploy** to `https://tax.acquill.com` on Cloudflare's free plan (see `DEPLOY-CLOUDFLARE.md`). Needs a sign-in to the
+   Cloudflare account that holds acquill.com (`npx wrangler login`).
+2. **Public contact and operator: set.** Operator "Acquill", contact support@acquill.com (in `worker/wrangler.jsonc` and the
    packaging script). Check that Cloudflare Email Routing delivers `support@` to a monitored inbox.
 3. **Test in Claude**: Settings, Connectors, Add custom connector, `https://tax.acquill.com/mcp`; call every tool.
    Also `npx @modelcontextprotocol/inspector --cli https://tax.acquill.com/mcp --transport http --method tools/list`.
