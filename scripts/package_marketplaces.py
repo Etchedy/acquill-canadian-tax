@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT=Path(__file__).resolve().parents[1]
-NAME='Canadian Tax MCP by Acquill'
+NAME='Acquill Canadian Tax'  # OpenAI: displayName at most 30 characters, no "MCP" or "Plugin" in the name
 DESCRIPTION=('Research Canadian tax using selected CRA guidance, federal legislation, and court decisions supplied by A2AJ. '
  'Search sources, read relevant passages with citations, and check coverage and freshness. '
  'CRA coverage is selected English publications; official statutory section retrieval provides current English Income Tax Act and Excise Tax Act text. '
@@ -32,7 +32,7 @@ def build(base_url, email, endpoint=None, demo_url=None):
     if demo_url:review['demo_recording_url']=https(demo_url)
     manifest={
       '$schema':'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json',
-      'name':'canadian-tax-mcp-acquill','version':'0.1.0','description':DESCRIPTION,
+      'name':'acquill-canadian-tax','version':'0.1.0','description':DESCRIPTION,
       'author':{'name':'Acquill','email':email,'url':base_url},'homepage':base_url,
       'keywords':['canada','tax','cra','legislation','court-decisions','research'],
       'extensions':{'com.openai':{
@@ -44,13 +44,13 @@ def build(base_url, email, endpoint=None, demo_url=None):
           'defaultPrompt':['Find CRA guidance and tax cases about interest deductibility.',
                            'Read Income Tax Act section 20 and identify its version.',
                            'Check the courts, dates and CRA publications this connector covers.'],
-          'brandColor':'#153E35','composerIcon':'./assets/icon.png','logo':'./assets/icon.png'},
+          'brandColor':'#006DFD','composerIcon':'./assets/icon.png','logo':'./assets/icon.png'},
         'review':review,'publication':{'release_notes':'Initial public-source Canadian tax research connector.'}}}}
     mcp={'$schema':'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json',
          'mcpServers':{'canadian-tax':{'type':'streamable-http','url':endpoint}}}
     claude={'document_type':'Submission worksheet, not an API payload','name':NAME,'publisher':'Acquill',
             'description':DESCRIPTION,'remote_mcp_url':endpoint,'transport':'Streamable HTTP','authentication':'none',
-            'documentation_url':base_url,'privacy_policy_url':base_url+'/privacy','support_contact':email,
+            'documentation_url':base_url+'/docs','privacy_policy_url':base_url+'/privacy','support_contact':email,
             'icon_file':'assets/icon.png','test_account':'Not applicable: no user accounts; all tools access public sources.',
             'tested_in_claude':False,'portal':'https://claude.ai/directory/manage',
             'outstanding':['Test every tool in Claude and record actual results.','Complete publisher and directory review requirements.']}

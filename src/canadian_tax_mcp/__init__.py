@@ -1,1 +1,1 @@
-"""Canadian Tax MCP by Acquill."""
+"""Acquill Canadian Tax: public Canadian tax source research connector."""

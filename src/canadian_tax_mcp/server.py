@@ -4,7 +4,7 @@ from typing import Literal
 from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import ToolAnnotations
-from starlette.responses import JSONResponse, HTMLResponse
+from starlette.responses import JSONResponse, HTMLResponse, PlainTextResponse
 from .core import Index, NAME, UpstreamError
 from .service import Research
 from .public_pages import render
@@ -20,7 +20,10 @@ public_host=os.getenv('PUBLIC_HOST','localhost:8000')
 logging.getLogger('httpx').setLevel(logging.WARNING)
 security=TransportSecuritySettings(enable_dns_rebinding_protection=True,
     allowed_hosts=['localhost:*','127.0.0.1:*',public_host],
-    allowed_origins=['http://localhost:*','http://127.0.0.1:*','https://'+public_host])
+    # Claude's and ChatGPT's connector traffic can carry their own origins; an over-strict Origin check rejects it
+    # (Claude's testing guide). This is a no-auth, read-only public-data service.
+    allowed_origins=['http://localhost:*','http://127.0.0.1:*','https://'+public_host,
+        'https://claude.ai','https://claude.com','https://chatgpt.com','https://chat.openai.com'])
 mcp=FastMCP(NAME,instructions=INSTRUCTIONS,host=os.getenv('HOST','127.0.0.1'),port=int(os.getenv('PORT','8000')),
     stateless_http=True,json_response=True,max_request_body_size=65536,transport_security=security)
 research=Research(Index(os.getenv('TAX_DB','data/cra.sqlite3')))
@@ -79,6 +82,15 @@ async def health(request):
 @mcp.custom_route('/',methods=['GET'])
 async def homepage(request):return HTMLResponse(render('home'))
 
+@mcp.custom_route('/docs',methods=['GET'])
+async def docs(request):return HTMLResponse(render('docs'))
+
+# OpenAI's plugin dashboard verifies the domain by fetching this token as plain text (set OPENAI_APPS_CHALLENGE).
+@mcp.custom_route('/.well-known/openai-apps-challenge',methods=['GET'])
+async def openai_challenge(request):
+    token=os.getenv('OPENAI_APPS_CHALLENGE','').strip()
+    return PlainTextResponse(token) if token else PlainTextResponse('Not configured',status_code=404)
+
 @mcp.custom_route('/privacy',methods=['GET'])
 async def privacy(request):return HTMLResponse(render('privacy'))
 
@@ -88,8 +100,31 @@ async def terms(request):return HTMLResponse(render('terms'))
 @mcp.custom_route('/support',methods=['GET'])
 async def support(request):return HTMLResponse(render('support'))
 
+def keep_index_fresh():
+    """With INDEX_REFRESH_DAYS set (the hosted service), an empty or older index is rebuilt in the background
+    while the server keeps answering; checked at start and every 6 hours. Off by default (local runs, tests)."""
+    days=float(os.getenv('INDEX_REFRESH_DAYS','0') or 0)
+    if days<=0:return
+    import subprocess,sys,threading,time
+    from datetime import datetime,timezone
+    def stale():
+        c=research.index.coverage()
+        if not c.get('documents') or not c.get('latest_retrieval'):return True
+        age=datetime.now(timezone.utc)-datetime.fromisoformat(c['latest_retrieval'])
+        return age.total_seconds()>=days*86400
+    def loop():
+        while True:
+            try:
+                if stale():
+                    logging.getLogger(__name__).warning('CRA index empty or stale: rebuilding')
+                    subprocess.run([sys.executable,'-m','canadian_tax_mcp.ingest','--db',research.index.path],timeout=3*3600,check=False)
+            except Exception:logging.getLogger(__name__).exception('CRA index refresh failed')
+            time.sleep(6*3600)
+    threading.Thread(target=loop,daemon=True,name='index-refresh').start()
+
 def main():
     import uvicorn
+    keep_index_fresh()
     uvicorn.run(mcp.streamable_http_app(),host=os.getenv('HOST','127.0.0.1'),port=int(os.getenv('PORT','8000')),
                 limit_concurrency=64,timeout_keep_alive=5,proxy_headers=False)
 

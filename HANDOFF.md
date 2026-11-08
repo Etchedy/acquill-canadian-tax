@@ -1,8 +1,8 @@
-# Handoff: Canadian Tax MCP by Acquill
+# Handoff: Acquill Canadian Tax (formerly "Canadian Tax MCP by Acquill")
 
 ## User's intended result
 
-A public connector listed in both ChatGPT and Claude directories, named **Canadian Tax MCP by Acquill**, accessing CRA guidance, legislation and A2AJ court decisions. The user wants AI to write and finish the implementation. Do not require them to code. Do not add a companion skill or change the final goal to a custom-only connector.
+A public connector listed in both ChatGPT and Claude directories, named **Acquill Canadian Tax** (renamed 2026-11-08 to meet OpenAI naming rules; see MARKETPLACES.md), accessing CRA guidance, legislation and A2AJ court decisions. The user wants AI to write and finish the implementation. Do not require them to code. Do not add a companion skill or change the final goal to a custom-only connector.
 
 ## Current state
 

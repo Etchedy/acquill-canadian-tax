@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "acquill-canadian-tax-mcp"
 version = "0.1.0"
-description = "Canadian Tax MCP by Acquill: CRA guidance, legislation and court decisions"
+description = "Acquill Canadian Tax: CRA guidance, legislation and court decisions"
 requires-python = ">=3.11"
 dependencies = ["mcp==1.30.0", "httpx[socks]==0.28.1", "beautifulsoup4==4.15.0", "uvicorn==0.54.0"]
 [project.optional-dependencies]

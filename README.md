@@ -1,4 +1,4 @@
-# Canadian Tax MCP by Acquill
+# Acquill Canadian Tax
 
 A read-only remote MCP server for Canadian tax research. One HTTPS `/mcp` endpoint serves ChatGPT and Claude. No companion skill, model API key, CanLII key, or taxpayer account is required.
 

@@ -12,7 +12,7 @@ from urllib.parse import urlsplit, urlunsplit, unquote
 import httpx
 from bs4 import BeautifulSoup
 
-NAME = "Canadian Tax MCP by Acquill"
+NAME = "Acquill Canadian Tax"
 ALIASES = {"cca": "capital cost allowance", "itc": "input tax credit", "ccpc": "Canadian controlled private corporation", "gaar": "general anti avoidance rule", "hst": "harmonized sales tax", "gst": "goods and services tax"}
 ALLOWED = {"www.canada.ca", "laws-lois.justice.gc.ca", "api.a2aj.ca"}
 

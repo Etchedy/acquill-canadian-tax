@@ -13,12 +13,26 @@ def render(page):
       <p>The remote MCP endpoint is <code>/mcp</code>. No sign-in or API key is required. Six tools search sources, retrieve documents and CRA passages, read known CRA publication URLs and current statutory sections, and check coverage.</p>
       <p>CRA coverage is selected English HTML publications. Official section retrieval covers current English Income Tax Act and Excise Tax Act text. A2AJ supplies unofficial court and legislative copies; coverage varies. The connector does not resolve historical law, verify subsequent judicial treatment, or guarantee complete research.</p>
       <p>Example: “Find CRA guidance, legislation and tax cases about interest deductibility. Read the relevant passages, cite sources, and identify coverage and tax-year limitations.”</p>'''),
+      'docs':('Documentation', '''<p>Connect any MCP client to <code>/mcp</code> on this host (Streamable HTTP, no sign-in or API key). In Claude: Settings, Connectors, Add custom connector. In ChatGPT: the plugin directory, or a custom MCP server in developer mode.</p>
+      <h2>Tools</h2><p>All six tools are read-only and only reach public sources.</p><ul>
+      <li><strong>search_tax</strong> (Search Canadian tax sources): CRA guidance, A2AJ court decisions and federal legislation; returns excerpts, IDs and citations.</li>
+      <li><strong>get_document</strong> (Read a source document): bounded text of a case, law or CRA result, with continuation offsets and optional paragraph ranges.</li>
+      <li><strong>get_cra_passages</strong> (Read CRA passages with context): a CRA search hit with the passages around it.</li>
+      <li><strong>get_legislation_section</strong> (Read an official statutory section): current English Income Tax Act or Excise Tax Act section from Justice Canada.</li>
+      <li><strong>get_cra_publication</strong> (Read a CRA publication by URL): a known Canada.ca CRA HTML page in English or French.</li>
+      <li><strong>check_coverage</strong> (Check source coverage and freshness): CRA index size and dates, and A2AJ court and legislation coverage.</li></ul>
+      <h2>Example prompts</h2><ol>
+      <li>Find CRA guidance and tax court decisions about the deductibility of interest on money borrowed to invest. Quote the key passages with links.</li>
+      <li>Read Income Tax Act section 18(1)(h) and explain what it covers, citing the current consolidated text.</li>
+      <li>What does the CRA say about claiming home office expenses for employees? Read the relevant guidance and list the conditions.</li>
+      <li>Which courts and date ranges does this connector cover, and how current is its CRA index?</li></ol>
+      <h2>Limits</h2><p>CRA search covers selected English HTML publications; PDFs and taxpayer accounts are not supported. Statutory sections are current law, not historical versions. A2AJ copies are unofficial. Results are research material, not individualized tax, accounting or legal advice.</p>'''),
       'privacy':('Privacy', f'''<p>Acquill operates this public-source research connector. Contact: {support}</p>
       <p>The connector receives tool arguments sent by your AI client, including searches, citations, filters and selected passages. It does not require an account and does not access CRA taxpayer accounts, returns or payment information. Do not send social insurance numbers, confidential taxpayer details or other sensitive personal information.</p>
       <p>Search terms and requested citations are sent to A2AJ when using its search and document tools. Requests to CRA and Justice Canada retrieve public materials. Those services and your AI client process data under their own policies.</p>
       <p>The application stores a local index of public CRA content. It does not intentionally persist users' tool arguments or conversations. An in-memory cache holds upstream request parameters and responses; entries stop being reused after their TTL, normally one hour (30 minutes for official statutory sections), and are removed on later eviction or process restart. This is not a promise of immediate deletion at expiry.</p>
       <p>Network and hosting providers can process IP addresses and operational/security metadata. Their retention and geographic processing depend on the deployment. Your ChatGPT or Claude conversation is managed by that provider, independently of this connector. Contact Acquill for the deployed service's hosting and retention details and privacy requests.</p>'''),
-      'terms':('Terms of use', f'''<p>Canadian Tax MCP by Acquill provides public-source research tools, not individualized tax, accounting or legal advice. Users remain responsible for checking facts, authoritative texts, applicable dates, amendments and subsequent case treatment.</p>
+      'terms':('Terms of use', f'''<p>Acquill Canadian Tax provides public-source research tools, not individualized tax, accounting or legal advice. Users remain responsible for checking facts, authoritative texts, applicable dates, amendments and subsequent case treatment.</p>
       <p>Coverage may be incomplete and services may be unavailable. CRA statements are administrative guidance. A2AJ copies are unofficial; original sources and source-specific licence restrictions remain applicable. Access through this service does not grant rights to republish or commercially exploit third-party materials.</p>
       <p>Use the service lawfully. Do not submit confidential taxpayer information, attempt unauthorized access, or overload the service. Acquill may limit access to preserve availability. No guarantee of accuracy, availability, completeness or fitness for a particular purpose is made, to the extent permitted by applicable law.</p>
       <p>Questions: {support}</p>'''),
@@ -27,4 +41,4 @@ def render(page):
     title,body=pages[page]
     return f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — {NAME}</title>
     <style>body{{font:17px/1.65 system-ui,sans-serif;max-width:780px;margin:4rem auto;padding:0 24px;color:#16352d}}nav a{{margin-right:20px;color:#136650}}h1{{line-height:1.2}}small{{color:#596760}}</style>
-    <header><strong>{NAME}</strong><nav><a href="/">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a></nav></header><main>{draft}<h1>{html.escape(title)}</h1>{body}</main></html>'''
+    <header><strong>{NAME}</strong><nav><a href="/">About</a><a href="/docs">Documentation</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a></nav></header><main>{draft}<h1>{html.escape(title)}</h1>{body}</main></html>'''
