@@ -58,7 +58,7 @@ def build(base_url, email, endpoint=None, demo_url=None):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--base-url',required=True);parser.add_argument('--support-email',required=True)
+    parser.add_argument('--base-url',required=True);parser.add_argument('--support-email',default='support@acquill.com')
     parser.add_argument('--endpoint');parser.add_argument('--demo-url');parser.add_argument('--out',default='dist/marketplaces')
     args=parser.parse_args()
     try:manifest,mcp,claude=build(args.base_url,args.support_email,args.endpoint,args.demo_url)

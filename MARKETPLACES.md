@@ -28,15 +28,15 @@ characters; the same name is used on both. Requirements were re-checked against 
 
 1. **Deploy** to `https://tax.acquill.com` (see `DEPLOY-FLY.md`). Needs the Fly account behind acquill.com and a
    go-ahead on the small hosting cost.
-2. **Confirm the public contact and operator**: the support email on the pages and listings, and the legal name
-   and jurisdiction in the privacy policy and terms. acquill.com currently lists a Gmail address.
+2. **Public contact and operator: set.** Operator "Acquill", contact support@acquill.com (in `fly.toml` and the
+   packaging script). Check that Cloudflare Email Routing delivers `support@` to a monitored inbox.
 3. **Test in Claude**: Settings, Connectors, Add custom connector, `https://tax.acquill.com/mcp`; call every tool.
    Also `npx @modelcontextprotocol/inspector --cli https://tax.acquill.com/mcp --transport http --method tools/list`.
 4. **Test in ChatGPT**: developer mode, add the custom MCP server, run all five positive and three negative cases.
 5. **Record a demo video** of the deployed connector working in ChatGPT (OpenAI requires `demo_recording_url`;
    Claude does not accept video).
 6. **Build the packages**:
-   `python scripts/package_marketplaces.py --base-url https://tax.acquill.com --support-email <email> --demo-url <video>`.
+   `python scripts/package_marketplaces.py --base-url https://tax.acquill.com --demo-url <video>`.
 7. **OpenAI**: verify the individual or business in platform.openai.com organization settings; upload the ZIP
    at platform.openai.com/plugins (With MCP); put the domain token in `OPENAI_APPS_CHALLENGE`; fix scan findings;
    submit for review.

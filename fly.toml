@@ -13,7 +13,8 @@ primary_region = "yyz"
   TAX_DB = "/app/data/cra.sqlite3"
   # Rebuild the CRA index when empty (first start) or older than this many days.
   INDEX_REFRESH_DAYS = "30"
-  # SUPPORT_EMAIL and OPENAI_APPS_CHALLENGE are set with `fly secrets set` (see DEPLOY-FLY.md).
+  SUPPORT_EMAIL = "support@acquill.com"
+  # OPENAI_APPS_CHALLENGE is set with `fly secrets set` (see DEPLOY-FLY.md).
 
 [[mounts]]
   source = "tax_data"
